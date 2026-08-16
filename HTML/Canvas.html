@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canvas Chart Examples</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        color: #222;
+        background: #f4f7fb;
+      }
+      h1 {
+        margin-bottom: 12px;
+      }
+      .chart-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+      }
+      .chart-box {
+        background: #fff;
+        border: 1px solid #d7dae1;
+        border-radius: 12px;
+        padding: 16px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+      }
+      .chart-box h2 {
+        margin: 0 0 8px;
+        font-size: 1.1rem;
+      }
+      canvas {
+        width: 100%;
+        max-width: 100%;
+        height: 320px;
+      }
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .legend span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        background: #f1f5fb;
+        border-radius: 999px;
+        font-size: 0.9rem;
+      }
+      .legend-color {
+        width: 12px;
+        height: 12px;
+        display: inline-block;
+        border-radius: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Canvas Chart Examples</h1>
+    <div class="chart-grid">
+      <section class="chart-box">
+        <h2>Line Chart</h2>
+        <canvas id="lineChart"></canvas>
+      </section>
+      <section class="chart-box">
+        <h2>Bar Chart</h2>
+        <canvas id="barChart"></canvas>
+      </section>
+      <section class="chart-box">
+        <h2>Pie Chart</h2>
+        <canvas id="pieChart"></canvas>
+        <div class="legend" id="pieLegend"></div>
+      </section>
+      <section class="chart-box">
+        <h2>Scatter Chart</h2>
+        <canvas id="scatterChart"></canvas>
+      </section>
+      <section class="chart-box">
+        <h2>Area Chart</h2>
+        <canvas id="areaChart"></canvas>
+      </section>
+      <section class="chart-box">
+        <h2>Donut Chart</h2>
+        <canvas id="donutChart"></canvas>
+        <div class="legend" id="donutLegend"></div>
+      </section>
+    </div>
+
+    <script>
+      const chartColors = [
+        "#4a90e2",
+        "#f5a623",
+        "#7ed321",
+        "#d0021b",
+        "#bd10e0",
+      ];
+
+      function drawAxes(ctx, width, height, margin, labels = []) {
+        ctx.strokeStyle = "#888";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(margin, margin / 2);
+        ctx.lineTo(margin, height - margin);
+        ctx.lineTo(width - margin / 2, height - margin);
+        ctx.stroke();
+
+        ctx.fillStyle = "#444";
+        ctx.font = "12px Arial";
+        if (labels.length) {
+          const step = (width - margin * 2) / (labels.length - 1);
+          labels.forEach((label, index) => {
+            const x = margin + step * index;
+            ctx.fillText(label, x - 12, height - margin + 20);
+          });
+        }
+      }
+
+      function drawLineChart() {
+        const canvas = document.getElementById("lineChart");
+        const ctx = canvas.getContext("2d");
+        const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+        const values = [22, 34, 28, 40, 38, 52];
+        const width = canvas.width = canvas.clientWidth * devicePixelRatio;
+        const height = canvas.height = canvas.clientHeight * devicePixelRatio;
+        const margin = 40 * devicePixelRatio;
+        const chartWidth = width - margin * 2;
+        const chartHeight = height - margin * 2;
+        const maxValue = Math.max(...values);
+
+        ctx.scale(devicePixelRatio, devicePixelRatio);
+        drawAxes(ctx, width / devicePixelRatio, height / devicePixelRatio, margin / devicePixelRatio, labels);
+
+        ctx.strokeStyle = chartColors[0];
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        values.forEach((value, index) => {
+          const x = margin / devicePixelRatio + (chartWidth / devicePixelRatio) / (labels.length - 1) * index;
+          const y = (height / devicePixelRatio - margin / devicePixelRatio) - (value / maxValue) * (chartHeight / devicePixelRatio);
+          if (index === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+          ctx.fillStyle = chartColors[0];
+          ctx.beginPath();
+          ctx.arc(x, y, 4, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.stroke();
+      }
+
+      function drawBarChart() {
+        const canvas = document.getElementById("barChart");
+        const ctx = canvas.getContext("2d");
+        const labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+        const values = [12, 18, 14, 20, 24, 16, 22];
+        const width = canvas.width = canvas.clientWidth * devicePixelRatio;
+        const height = canvas.height = canvas.clientHeight * devicePixelRatio;
+        const margin = 40 * devicePixelRatio;
+        const chartWidth = width - margin * 2;
+        const chartHeight = height - margin * 2;
+        const maxValue = Math.max(...values);
+        const barWidth = (chartWidth / values.length) * 0.7;
+
+        ctx.scale(devicePixelRatio, devicePixelRatio);
+        drawAxes(ctx, width / devicePixelRatio, height / devicePixelRatio, margin / devicePixelRatio, labels);
+
+        values.forEach((value, index) => {
+          const x = margin / devicePixelRatio + (chartWidth / devicePixelRatio) / values.length * index + ((chartWidth / devicePixelRatio) / values.length - barWidth / devicePixelRatio) / 2;
+          const y = (height / devicePixelRatio - margin / devicePixelRatio) - (value / maxValue) * (chartHeight / devicePixelRatio);
+          ctx.fillStyle = chartColors[index % chartColors.length];
+          ctx.fillRect(x, y, barWidth / devicePixelRatio, (value / maxValue) * (chartHeight / devicePixelRatio));
+        });
+      }
+
+      function drawPieChart() {
+        const canvas = document.getElementById("pieChart");
+        const ctx = canvas.getContext("2d");
+        const data = [30, 20, 25, 15, 10];
+        const labels = ["JavaScript", "HTML", "CSS", "React", "Vue"];
+        const total = data.reduce((sum, value) => sum + value, 0);
+        const radius = Math.min(canvas.clientWidth, canvas.clientHeight) * 0.35;
+        const centerX = canvas.clientWidth / 2;
+        const centerY = canvas.clientHeight / 2;
+
+        canvas.width = canvas.clientWidth * devicePixelRatio;
+        canvas.height = canvas.clientHeight * devicePixelRatio;
+        ctx.scale(devicePixelRatio, devicePixelRatio);
+
+        let startAngle = 0;
+        data.forEach((value, index) => {
+          const sliceAngle = (value / total) * Math.PI * 2;
+          ctx.beginPath();
+          ctx.moveTo(centerX, centerY);
+          ctx.fillStyle = chartColors[index % chartColors.length];
+          ctx.arc(centerX, centerY, radius, startAngle, startAngle + sliceAngle);
+          ctx.closePath();
+          ctx.fill();
+          startAngle += sliceAngle;
+        });
+
+        const legend = document.getElementById("pieLegend");
+        legend.innerHTML = labels
+          .map((label, index) => `
+            <span><span class="legend-color" style="background:${chartColors[index % chartColors.length]}"></span>${label}</span>
+          `)
+          .join("");
+      }
+
+      function drawScatterChart() {
+        const canvas = document.getElementById("scatterChart");
+        const ctx = canvas.getContext("2d");
+        const points = [
+          { x: 10, y: 20 },
+          { x: 20, y: 12 },
+          { x: 30, y: 35 },
+          { x: 40, y: 28 },
+          { x: 50, y: 40 },
+          { x: 60, y: 22 },
+          { x: 70, y: 48 },
+        ];
+        const width = canvas.width = canvas.clientWidth * devicePixelRatio;
+        const height = canvas.height = canvas.clientHeight * devicePixelRatio;
+        const margin = 40 * devicePixelRatio;
+        const chartWidth = width - margin * 2;
+        const chartHeight = height - margin * 2;
+        const maxX = Math.max(...points.map((point) => point.x));
+        const maxY = Math.max(...points.map((point) => point.y));
+
+        ctx.scale(devicePixelRatio, devicePixelRatio);
+        drawAxes(ctx, width / devicePixelRatio, height / devicePixelRatio, margin / devicePixelRatio);
+
+        points.forEach((point) => {
+          const x = margin / devicePixelRatio + (point.x / maxX) * (chartWidth / devicePixelRatio);
+          const y = (height / devicePixelRatio - margin / devicePixelRatio) - (point.y / maxY) * (chartHeight / devicePixelRatio);
+          ctx.fillStyle = chartColors[2];
+          ctx.beginPath();
+          ctx.arc(x, y, 6, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
+      function drawAreaChart() {
+        const canvas = document.getElementById("areaChart");
+        const ctx = canvas.getContext("2d");
+        const labels = ["Q1", "Q2", "Q3", "Q4"];
+        const values = [40, 65, 55, 80];
+        const width = canvas.width = canvas.clientWidth * devicePixelRatio;
+        const height = canvas.height = canvas.clientHeight * devicePixelRatio;
+        const margin = 40 * devicePixelRatio;
+        const chartWidth = width - margin * 2;
+        const chartHeight = height - margin * 2;
+        const maxValue = Math.max(...values);
+
+        ctx.scale(devicePixelRatio, devicePixelRatio);
+        drawAxes(ctx, width / devicePixelRatio, height / devicePixelRatio, margin / devicePixelRatio, labels);
+
+        ctx.fillStyle = "rgba(74, 144, 226, 0.2)";
+        ctx.strokeStyle = chartColors[0];
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        values.forEach((value, index) => {
+          const x = margin / devicePixelRatio + (chartWidth / devicePixelRatio) / (labels.length - 1) * index;
+          const y = (height / devicePixelRatio - margin / devicePixelRatio) - (value / maxValue) * (chartHeight / devicePixelRatio);
+          if (index === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.lineTo(width / devicePixelRatio - margin / devicePixelRatio, height / devicePixelRatio - margin / devicePixelRatio);
+        ctx.lineTo(margin / devicePixelRatio, height / devicePixelRatio - margin / devicePixelRatio);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      }
+
+      function drawDonutChart() {
+        const canvas = document.getElementById("donutChart");
+        const ctx = canvas.getContext("2d");
+        const data = [28, 22, 18, 16, 16];
+        const labels = ["Desktop", "Mobile", "Tablet", "TV", "Other"];
+        const total = data.reduce((sum, value) => sum + value, 0);
+        const radius = Math.min(canvas.clientWidth, canvas.clientHeight) * 0.32;
+        const centerX = canvas.clientWidth / 2;
+        const centerY = canvas.clientHeight / 2;
+
+        canvas.width = canvas.clientWidth * devicePixelRatio;
+        canvas.height = canvas.clientHeight * devicePixelRatio;
+        ctx.scale(devicePixelRatio, devicePixelRatio);
+
+        let startAngle = 0;
+        data.forEach((value, index) => {
+          const sliceAngle = (value / total) * Math.PI * 2;
+          ctx.beginPath();
+          ctx.moveTo(centerX, centerY);
+          ctx.fillStyle = chartColors[index % chartColors.length];
+          ctx.arc(centerX, centerY, radius, startAngle, startAngle + sliceAngle);
+          ctx.closePath();
+          ctx.fill();
+          startAngle += sliceAngle;
+        });
+
+        ctx.fillStyle = "#f4f7fb";
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius * 0.55, 0, Math.PI * 2);
+        ctx.fill();
+
+        const legend = document.getElementById("donutLegend");
+        legend.innerHTML = labels
+          .map((label, index) => `
+            <span><span class="legend-color" style="background:${chartColors[index % chartColors.length]}"></span>${label}</span>
+          `)
+          .join("");
+      }
+
+      drawLineChart();
+      drawBarChart();
+      drawPieChart();
+      drawScatterChart();
+      drawAreaChart();
+      drawDonutChart();
+    </script>
+  </body>
+</html>

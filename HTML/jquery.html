@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>jQuery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!-- TO DOWNLOAD JQUERY <script src="jquery-3.7.1.min.js"></script> -->
+    <script src="jquery.js"></script>
+ <style>
+  /*For Class in JQuery*/
+  .blue{
+    color:blue;
+  }
+  /*For Traversing*/
+  .traverse{
+    color:grey;
+    font-style:italic;
+  }
+ </style>
+  </head>
+  <body>
+    <h1>jQuery Example</h1>
+    <p>This is a simple jQuery example.</p>
+    <button id="click">Click me!</button>
+    <button id="hide">Hide Paragraph</button>
+    <button id="show">Show Paragraph</button>
+    <p id="hover">Hover over me!</p>
+    <p id="on">Mouse over me!</p>
+    <p id="fade">Fade out me!</p>
+    <p id="fadein">Fade in me!</p>
+    <p id="fadetoggle">Fade toggle me!</p>
+    <p id="fadeto">Fade to me!</p>
+    <p id="slideup">Slide up me!</p>
+    <p id="slidedown">Slide down me!</p>
+    <p id="slidetoggle">Slide toggle me!</p>
+    <p style="position: relative;" id="animate">Animate me!</p>
+    <button id="cb">Click the button to hide me and see a callback alert.</button>
+
+    <h1>Jquery HTML Example</h1>
+    <h2>Set and get</h2>
+    <p id="textp">This is a simple paragraph.</p>
+    <button id="text">Get Text</button>
+    <button id="html">Set Text</button>
+    <button id="val">Set Value</button>
+    <button id="attr">Set Attribute</button>
+
+    <h2>Add</h2>
+    <p id="app">Append Me</p>
+    <button id="append">Append</button>
+    <p id="prep">Prepend Me</p>
+    <button id="prepend">Prepend</button>
+    <p id="aft">After Me</p>
+    <button id="after">Add After</button>
+    <p id="befo">Before Me</p>
+    <button id="before">Add Before</button>
+
+    <h2>Remove</h2>
+    <p id="rem">Remove Me</p>
+    <p id="showremove" style="display: none;">I was removed!</p>
+    <button id="remove">Remove Element</button>
+    <p id="emp">Empty Me</p>
+    <p id="showempty" style="display: none;">I was emptied!</p>
+    <button id="empty">Empty Element</button>
+
+    <h1>CSS Classes</h1>
+    <p id="class">Add, Remove, and Toggle Classes in this paragraph.</p>
+    <button id="addclass">Add Class</button>
+    <button id="removeclass">Remove Class</button>
+    <button id="toggleclass">Toggle Class</button>
+
+    <h1>CSS Properties</h1>
+    <p id="col">CSS Properties Example paragraph.</p>
+    <button id="css">Set color to red</button>
+
+    <h1>Dimensions</h1>
+    <p id="dimensions">Dimensions of this paragraph will be displayed in an alert box when you click the buttons below.</p>
+    <button id="width">Get Width</button>
+    <button id="height">Get Height</button>
+    <button id="innerwidth">Get Inner Width</button>
+    <button id="innerheight">Get Inner Height</button>
+    <button id="outerwidth">Get Outer Width</button>
+    <button id="outerheight">Get Outer Height</button>
+
+    <h1>Traversing</h1>
+    <h2>Ancestors</h2>
+    <div class="traverse">
+      <div style="width:500px;">div (great-grandparent)
+        <ul>ul (grandparent)  
+          <li>li (direct parent)
+            <p>p (child)
+              <span>span (grandchild)</span>   
+            </p>
+            <p>p (child)
+              <span>span (grandchild)</span>
+            </p>
+            <!--<span id="span1">Span1-Parent()</span>-->
+            <!--<span id="span2">Span2-Parents()</span>-->
+            <!--<span id="span3">Span2-Parents("ul")</span>-->
+            <!--<span id="span4">Span4-ParentsUntil()</span>-->
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

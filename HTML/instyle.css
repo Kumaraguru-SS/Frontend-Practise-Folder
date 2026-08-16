@@ -1,0 +1,35 @@
+ h4 {
+                color: blue;
+                font-size: 24px;
+                text-align: center;
+            }
+            table, th, td {
+                border: 1px solid red;
+                border-collapse: collapse;
+            }
+            th, td {
+                background-color:powderblue;
+                color:blueviolet;
+                border-radius: 10px;
+                border-style: dotted;
+            }
+            th{text-align: center;}
+            th, td {
+                padding-top: 10px;
+                padding-bottom: 20px;
+                padding-left: 30px;
+                padding-right: 40px;
+            }
+            .city {
+                background-color: blue;
+                color: white;
+                border: 2px solid red;
+                margin: 20px;
+                padding: 20px;
+            }
+            #test {
+                background-color: lightblue;
+                color: black;
+                padding: 40px;
+                text-align: center;
+}

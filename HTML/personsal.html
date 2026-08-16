@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Meow Cyber</title>
+<link rel="icon" href="NeoYT.png" type="image/x-icon">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    body {
+        color: white;
+    }
+    h1 {
+        color: blue;
+        text-align: center;
+        font-size: 3vw;
+    }
+    p {
+        color: #ffffff;
+        font-size: 1.5vw;
+    }
+    .pfp-card {
+        background: rgba(255,255,255,0.12);
+        padding: 12px;
+        border-radius: 12px;
+        text-align: center;
+        width: 200px;
+        transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .pfp-card:hover {
+        transform: translateY(8px) scale(1.03);
+        background: rgba(255,255,255,0.22);
+        box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+    }
+    .pfp-link {
+        display: block;
+        text-decoration: none;
+    }
+    .pfp-image {
+        max-width: 180px;
+        height: auto;
+        display: block;
+        margin: 0 auto 8px;
+        border-radius: 10px;
+        transition: transform 0.25s ease;
+    }
+    .pfp-card:hover .pfp-image {
+        transform: scale(1.03);
+    }
+    .pfp-label {
+        color: white;
+        display: block;
+        word-break: break-word;
+    }
+</style>
+</head>
+<body style="background-image: url('Blackhole.png'); background-size: cover; background-repeat: no-repeat; background-attachment: fixed;">
+<h1>Welcome to Meow Cyber</h1>
+<p style="text-align: center;">Press the logo to go to my Youtube Channel</p>
+<a href="https://www.youtube.com/@meowcyber05" target="_blank">
+            <img src="NeoYT.png" alt="YouTube" width="100" height="100" style="display: block; margin: 0 auto;">
+        </a>
+<hr>
+
+<h1>My Favourite Wallpapers from Wallpaper Engine</h1>
+<div style="text-align: center; margin-bottom: 15px;">
+    <label for="videoSelect" style="color: white; font-size: 18px; margin-right: 10px;">Choose a video:</label>
+    <select id="videoSelect" onchange="changeVideo()" style="padding: 6px; font-size: 16px;">
+        <option value="CyreneEdit.mp4">Cyrene Edit</option>
+        <option value="EvernightDance.mp4">Evernight Dance</option>
+        <option value="Cyrene.mp4">Cyrene Remembrance</option>
+        <option value="cute_anime_chibi.mp4">Cute Edit</option>
+    </select>
+</div>
+
+<video id="videoPlayer" autoplay loop muted playsinline controls style="display: block; margin: 0 auto; max-width: 100%;">
+    <source src="CyreneEdit.mp4" type="video/mp4">
+</video>
+<p id="videoLabel" style="text-align: center;">Cyrene Edit</p><hr>
+
+<script>
+function changeVideo() {
+    const select = document.getElementById('videoSelect');
+    const video = document.getElementById('videoPlayer');
+    const label = document.getElementById('videoLabel');
+    const selectedOption = select.options[select.selectedIndex];
+    const selectedVideo = select.value;
+    const selectedName = selectedOption.text;
+
+    video.src = selectedVideo;
+    video.load();
+    video.play();
+    label.textContent = selectedName;
+}
+</script>
+
+<h1>My PFP List</h1>
+<div id="pfpGallery" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;"></div>
+<script src="PFPlist.js"></script>
+<hr>
+
+<h1>Random Youtube Videos</h1>
+<h2>Zurxed </h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lWBj9z2xDDs" title="Carry Minati food vlogs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</body>
+</html>

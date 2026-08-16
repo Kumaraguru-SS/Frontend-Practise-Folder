@@ -1,0 +1,2 @@
+<h2>AJAX Load</h2>
+<p>IF you see me then AJAX load() function worked successfully</p>
